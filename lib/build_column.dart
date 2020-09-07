@@ -78,3 +78,27 @@ Widget _buildExpandedBox(String label, {double height = 88.0}){
     child: buildRoundedBox(label, height:height),
   );
 }
+
+Widget buildTitleText() {
+  return Text(
+    "My Pet shop",
+    textScaleFactor: 3.0,
+    textAlign: TextAlign.center,
+  );
+}
+
+Widget buildRoundedBox(String label, {double height = 88.0}) {
+  return Container(
+    height: height,
+    width: 88.0,
+    alignment: Alignment(0.0, 0.0),
+    decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(20.0)),
+    child: Text(
+      label,
+      textAlign: TextAlign.center,
+    ),
+  );
+}
