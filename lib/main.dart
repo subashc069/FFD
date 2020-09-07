@@ -1,7 +1,4 @@
-// import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'build_column.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +25,7 @@ const _compatible = 'compatible with\nDoris D. Developer';
 class __MyHomePageState extends State<_MyHomePage> {
   bool _ageSwitchValue = false;
   String _messageToUser = "$_youAre NOT $_compatible";
+  double _loveFlutterSliderValue = 1.0;
 
   ///State
   @override
@@ -41,6 +39,7 @@ class __MyHomePageState extends State<_MyHomePage> {
         child: Column(
           children: <Widget>[
             _buildAgeSwitch(),
+            _buildLoveSlider(),
             _buildResultArea(),
           ],
         ),
@@ -48,28 +47,47 @@ class __MyHomePageState extends State<_MyHomePage> {
     );
   }
 
-
   ///Build
   Widget _buildAgeSwitch() {
-    return Row(children: <Widget>[
-      Text("Are you 18 or Older?"),
-      Switch(value: _ageSwitchValue, onChanged: _updateAgeSwitch)
-    ],);
+    return Row(
+      children: <Widget>[
+        Text("Are you 18 or Older?"),
+        Switch(value: _ageSwitchValue, onChanged: _updateAgeSwitch)
+      ],
+    );
   }
 
   Widget _buildResultArea() {
     return Row(
       children: <Widget>[
-        RaisedButton(
-            child: Text("Submit"),
-            onPressed: _updateResults),
-        SizedBox(width: 15.0,),
+        RaisedButton(child: Text("Submit"), onPressed: _updateResults),
+        SizedBox(
+          width: 15.0,
+        ),
         Text(_messageToUser, textAlign: TextAlign.center),
       ],
     );
   }
 
-
+  Widget _buildLoveSlider() {
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 10.0,
+        ),
+        Text(
+            "On Scale of 1 to 10, How much do you love developing flutter app"),
+        Slider(
+          min: 1.0,
+          max: 10.0,
+          divisions: 9,
+          value: _loveFlutterSliderValue,
+          onChanged: _updateLoveFlutterSliderValue,
+          label: '${_loveFlutterSliderValue.toInt()}',
+        ),
+      ],
+    );
+  }
 
   void _updateAgeSwitch(bool newValue) {
     setState(() {
@@ -80,7 +98,18 @@ class __MyHomePageState extends State<_MyHomePage> {
 
   void _updateResults() {
     setState(() {
-      _messageToUser = 'You are' + (_ageSwitchValue ? " " : "NOT") + 'compatible with \n Doris D Developer';
+      _messageToUser = 'You are' +
+          (_loveFlutterSliderValue >= 8 ? " " : " NOT ") +
+          _compatible;
+    });
+  }
+
+  void _updateLoveFlutterSliderValue(double newValue) {
+    setState(() {
+      _loveFlutterSliderValue = newValue;
+      _messageToUser = 'You are' +
+          (_loveFlutterSliderValue >= 8 ? " " : " NOT ") +
+          _compatible;
     });
   }
 }
